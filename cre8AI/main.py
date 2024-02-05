@@ -32,7 +32,7 @@ async def receive_post_data(json_data: dict):
     panel_image = generateImageFromText(panel_prompt)
 
     # check for paraphase flag
-    if paraphaseOrNot == 0:
+    if int(paraphaseOrNot) == 0:
         panelWithText = addText(text, panel_image)
     else:
         # use pegasus model for paraphrasing
