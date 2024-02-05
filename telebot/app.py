@@ -128,7 +128,7 @@ async def panelActionsCallBack(update: Update, context: CallbackContext):
         await asyncio.sleep(7)  # Async sleep
 
         if counter == 4:
-            text = "You have successfully created all the panels. Please view it in the outputs folder. \n\nGoodbye, hope to see you again :)"
+            text = "You have successfully created all the panels. Please view it in the output folder. \n\nGoodbye, hope to see you again :)"
             folder_to_remove = "telebotcre8AI"
             relative_path = os.path.relpath(os.getcwd(), os.path.join(os.getcwd(), folder_to_remove))
             new_absolute_path = os.path.abspath(relative_path)
