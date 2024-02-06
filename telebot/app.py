@@ -22,7 +22,7 @@ if __version_info__ < (20, 0, 0, "alpha", 1):
 
 global bot
 global TOKEN
-TOKEN = "<YOUR OWN TELEGRAM TOKEN>"
+TOKEN = "6752671463:AAESLDYm24_zbbNm5cUH11ViBy1v69H4EoY"
 
 PANEL, EDIT, PANEL_ACTIONS, TEXT, TO_PARAPHASE = range(5)
 
@@ -47,6 +47,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
                                            "3. Craft the perfect text caption to accompany your image panel. 📝 e.g., 'This bread is delicious!'\n\n"
                                            "4. Need a grammar check and an alternative sentence? Opt for paraphrasing with a simple 'Yes' when prompted. 🔄\n\n"
                                            "5. Save your diverse panels and effortlessly share your visual tales on any social media platform you fancy. 🌐\n\n"
+                                           "Note: Type /cancel to abort\n\n"
                                            "Happy Storytelling! 🚀✨")
 
 
@@ -74,11 +75,15 @@ async def provideText(update: Update, context: ContextTypes.DEFAULT_TYPE):
     return PANEL
 async def showPanel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     global counter, desc_user, text_user
-
+    username = update._effective_user.username
+    await update.message.reply_text(
+        "Please wait for the panel to be generated.."
+    )
     text_user = update.message.text
-    url = 'http://127.0.0.1:8000/'
+    url = 'https://cre8ai.onrender.com/'
 
     myobj = {
+                "username": username,
                 "panel": counter,
                 "description": desc_user,
                 "text": text_user,
@@ -89,7 +94,7 @@ async def showPanel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     print(x.text)
     await asyncio.sleep(5)  # Async sleep
     text = (
-        "Would you like to paraphrase your text caption?"
+        "# Panel " + str(counter) + " has been created successfully \n\nWould you like to paraphrase your text caption?"
     )
 
     buttons = [
@@ -104,19 +109,20 @@ async def showPanel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     relative_path = os.path.relpath(os.getcwd(), os.path.join(os.getcwd(), folder_to_remove))
     new_absolute_path = os.path.abspath(relative_path)
 
-    await update.message.reply_photo(photo=new_absolute_path + '\cre8AI\output\\panel-' +str(counter) + '.png', caption=text, reply_markup=keyboard)
+    await update.message.reply_photo(photo=new_absolute_path + '\cre8AI\output\\panel-' + str(counter) + '-'+ username +'.png', caption=text, reply_markup=keyboard)
 
     return PANEL_ACTIONS
 
 async def panelActionsCallBack(update: Update, context: CallbackContext):
     choice = update.callback_query.data
     global counter, desc_user, text_user
-
+    username = update._effective_user.username
 
     if choice == PARAPHASED:
-        url = 'http://127.0.0.1:8000/'
+        url = 'https://cre8ai.onrender.com/'
 
         myobj = {
+            "username": username,
             "panel": counter,
             "description": desc_user,
             "text": text_user,
@@ -134,7 +140,7 @@ async def panelActionsCallBack(update: Update, context: CallbackContext):
             new_absolute_path = os.path.abspath(relative_path)
 
             file = InputMediaPhoto(
-                media=open(new_absolute_path + '\cre8AI\output\\panel-' + str(counter) + '.png', 'rb'),
+                media=open(new_absolute_path + '\cre8AI\output\\panel-' + str(counter) + '-'+ username +'.png', 'rb'),
                 caption=text)
             await update.callback_query.edit_message_media(file)
             return ConversationHandler.END
@@ -148,7 +154,7 @@ async def panelActionsCallBack(update: Update, context: CallbackContext):
     relative_path = os.path.relpath(os.getcwd(), os.path.join(os.getcwd(), folder_to_remove))
     new_absolute_path = os.path.abspath(relative_path)
 
-    file = InputMediaPhoto(media=open(new_absolute_path + '\cre8AI\output\\panel-' +str(counter) + '.png','rb'), caption=text)
+    file = InputMediaPhoto(media=open(new_absolute_path + '\cre8AI\output\\panel-' +str(counter) + '-'+ username +'.png','rb'), caption=text)
     await update.callback_query.edit_message_media(file)
 
     counter += 1
@@ -158,7 +164,7 @@ async def cancel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     user = update.message.from_user
     logger.info("User %s canceled the conversation.", user.first_name)
     await update.message.reply_text(
-        "Bye! I hope we can talk again some day.", reply_markup=ReplyKeyboardRemove()
+        "Bye! I hope we can talk again some day.\n\nYou may start your experience again by typing /start", reply_markup=ReplyKeyboardRemove()
     )
 
     return ConversationHandler.END

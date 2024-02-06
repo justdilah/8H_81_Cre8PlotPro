@@ -22,6 +22,7 @@ model = PegasusForConditionalGeneration.from_pretrained(model_name).to(torch_dev
 @app.post("/")
 async def receive_post_data(json_data: dict):
     # Access values from json
+    username = json_data.get("username","")
     panelNum = json_data.get("panel", "")
     description = json_data.get("description", "")
     text = json_data.get("text", "")
@@ -44,7 +45,7 @@ async def receive_post_data(json_data: dict):
         panelWithText = addText(paraphrased_text[0], panel_image)
 
     # save the panel with text
-    panelWithText.save(f"output/panel-{panelNum}.png")
+    panelWithText.save(f"output/panel-{panelNum}-{username}.png")
 
     return {"message": "Operation successful"}
 
@@ -53,6 +54,7 @@ client = TestClient(app)
 
 def testBackend():
   test_data = {
+    "username": "panel-1-randominthesky.png",
     "panel": 1,
     "description": "A lady and a man holding hands",
     "text": "I think love you dear yes.",
