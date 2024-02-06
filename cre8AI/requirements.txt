@@ -5,3 +5,4 @@ pytest
 transformers
 sentence-splitter 
 SentencePiece 
+torch
