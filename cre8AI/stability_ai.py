@@ -10,7 +10,7 @@ import stability_sdk.interfaces.gooseai.generation.generation_pb2 as generation
 # insert your own STABILITY_KEY
 # site to obtain STABILITY_KEY: https://platform.stability.ai/account/keys
 os.environ['STABILITY_HOST'] = 'grpc.stability.ai:443'
-os.environ['STABILITY_KEY'] = '<YOUR OWN STABILITY KEY API>'
+os.environ['STABILITY_KEY'] = 'sk-eEs9jKDjqFwz7hs0b5gzp1wBI8FqPuXYN18bTb9R95uyv6mr'
 
 # set random seed
 seed = random.randint(0, 1000000000)
