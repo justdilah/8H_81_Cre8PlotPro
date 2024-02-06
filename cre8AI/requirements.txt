@@ -7,3 +7,4 @@ sentence-splitter
 SentencePiece
 torch
 pillow
+stability-sdk
