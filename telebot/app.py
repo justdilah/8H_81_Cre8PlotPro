@@ -80,7 +80,7 @@ async def showPanel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
         "Please wait for the panel to be generated.."
     )
     text_user = update.message.text
-    url = 'https://cre8ai.onrender.com/'
+    url = 'http://127.0.0.1:8000/'
 
     myobj = {
                 "username": username,
@@ -119,7 +119,7 @@ async def panelActionsCallBack(update: Update, context: CallbackContext):
     username = update._effective_user.username
 
     if choice == PARAPHASED:
-        url = 'https://cre8ai.onrender.com/'
+        url = 'http://127.0.0.1:8000/'
 
         myobj = {
             "username": username,
@@ -131,7 +131,7 @@ async def panelActionsCallBack(update: Update, context: CallbackContext):
 
         x = requests.post(url, json=myobj)
         print(x.text)
-        await asyncio.sleep(7)  # Async sleep
+        await asyncio.sleep(8)  # Async sleep
 
         if counter == 4:
             text = "You have successfully created all the panels. Please view it in the output folder. \n\nGoodbye, hope to see you again :)"
