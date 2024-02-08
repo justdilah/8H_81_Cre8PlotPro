@@ -54,7 +54,7 @@ client = TestClient(app)
 
 def testBackend():
   test_data = {
-    "username": "panel-1-randominthesky.png",
+    "username": "panel-1-testuser.png",
     "panel": 1,
     "description": "A lady and a man holding hands",
     "text": "I think love you dear yes.",
