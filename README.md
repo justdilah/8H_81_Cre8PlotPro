@@ -9,7 +9,11 @@ Link to [YouTube Video](https://youtu.be/dRdkiLh4bPc)
 
 ## Prerequisites
 #### Telegram Bot
-TODO
+1. Obtain your own Telegram Bot Token from BotFather [website](https://t.me/botfather)
+2. Insert your API key into the `telebot/app.py` into the following code:
+
+`TOKEN = 'YOUR_API_KEY'`
+
 #### Cre8AI
 1. Obtain your own Stability AI API key from this [website](https://platform.stability.ai/account/keys).
 2. Insert your API key into the `cre8AI/stability_ai.py` into the following code:
